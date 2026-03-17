@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ada Sesuatu yang Ingin Aku Katakan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+        }
+
+        /* Animasi Transisi Slide */
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animasi Hati Melayang */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: floatUp linear infinite;
+            bottom: -50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Tombol Interaktif */
+        .btn-bounce {
+            transition: transform 0.2s;
+        }
+        .btn-bounce:active {
+            transform: scale(0.95);
+        }
+
+        /* Efek Glow */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Animasi Goyang untuk "Harus Iya" */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            50% { transform: translateX(5px) rotate(5deg); }
+            75% { transform: translateX(-5px) rotate(-5deg); }
+            100% { transform: translateX(0); }
+        }
+        .shake-anim {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Animasi Pop */
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        /* Animasi Pulse untuk Made by */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex items-center justify-center relative">
+
+    <!-- Background Hearts Container -->
+    <div id="hearts-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <!-- Main Card Container -->
+    <div class="relative z-10 bg-white/30 backdrop-blur-md border border-white/40 shadow-2xl rounded-3xl p-8 w-11/12 max-w-md text-center min-h-[400px] flex flex-col justify-center items-center">
+        
+        <!-- SLIDE 1: Input Nama -->
+        <div id="slide-1" class="slide active flex-col w-full">
+            <div class="mb-6 text-5xl">💌</div>
+            <h1 class="text-2xl font-bold text-pink-600 mb-6">Halo! Ada surat cinta nih...</h1>
+            
+            <div class="space-y-4 w-full">
+                <div class="text-left">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Kamu (Penerima)</label>
+                    <input type="text" id="input-penerima" class="w-full px-4 py-3 rounded-xl border-none focus:ring-2 focus:ring-pink-400 bg-white/80 outline-none transition" placeholder="Contoh: Budi">
+                </div>
+                <div class="text-left">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Pengirim</label>
+                    <input type="text" id="input-pengirim" class="w-full px-4 py-3 rounded-xl border-none focus:ring-2 focus:ring-pink-400 bg-white/80 outline-none transition" placeholder="Contoh: Ani">
+                </div>
+                <button onclick="goToSlide(2)" class="btn-bounce w-full mt-4 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl shadow-lg transform transition hover:-translate-y-1">
+                    Lanjutkan ✨
+                </button>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Pertanyaan 1 -->
+        <div id="slide-2" class="slide flex-col w-full">
+            <div class="mb-4 text-4xl animate-bounce">🤔</div>
+            <h2 id="text-slide-2" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed">
+                <!-- JS will inject text here -->
+            </h2>
+            <div class="flex gap-4 justify-center w-full">
+                <button onclick="goToSlide(3)" class="btn-bounce flex-1 bg-green-400 hover:bg-green-500 text-white font-bold py-3 rounded-xl shadow-md">
+                    Iya, Tau 😊
+                </button>
+                <button onclick="goToSlide(3)" class="btn-bounce flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 rounded-xl shadow-md">
+                    Gak Tau 🤷
+                </button>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Pertanyaan 2 -->
+        <div id="slide-3" class="slide flex-col w-full">
+            <div class="mb-4 text-4xl animate-pulse">😳</div>
+            <h2 id="text-slide-3" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed">
+                <!-- JS will inject text here -->
+            </h2>
+            <div class="flex gap-4 justify-center w-full">
+                <button onclick="goToSlide(4)" class="btn-bounce flex-1 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl shadow-md">
+                    Iya, Tau 💕
+                </button>
+                <button onclick="goToSlide(3)" class="btn-bounce flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 rounded-xl shadow-md">
+                    Gak Tau 🙈
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-4">*pssst, coba pencet yang lain deh</p>
+        </div>
+
+        <!-- SLIDE 4: Pernyataan Cinta -->
+        <div id="slide-4" class="slide flex-col w-full">
+            <div class="mb-4 text-5xl">💖</div>
+            <h2 id="text-slide-4" class="text-2xl font-bold text-pink-600 mb-6 glow-text">
+                <!-- JS will inject text here -->
+            </h2>
+            <p class="text-gray-700 mb-8">Mau gak jadi pacar aku?</p>
+            
+            <div class="flex gap-4 justify-center w-full relative">
+                <button id="btn-ya-slide-4" onclick="goToSlide(5)" class="btn-bounce flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg text-lg transform transition hover:scale-105">
+                    MAU DONG! ❤️
+                </button>
+                <button id="btn-tidak-slide-4" onclick="forceYes(this)" class="btn-bounce flex-1 bg-gray-300 text-gray-500 font-bold py-4 rounded-xl shadow-sm cursor-not-allowed">
+                    Engga
+                </button>
+            </div>
+            <p id="msg-error-4" class="text-red-500 font-bold mt-4 hidden text-sm">Harus Iya! Gak boleh engga! Wajib Iya! 😤</p>
+        </div>
+
+        <!-- SLIDE 5: Konfirmasi Final -->
+        <div id="slide-5" class="slide flex-col w-full">
+            <div class="mb-4 text-4xl">🥺👉👈</div>
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Beneran nih mau jadi pacar aku?</h2>
+            <p class="text-sm text-gray-600 mb-8">Janji gak bakal nyesel?</p>
+            
+            <div class="flex gap-4 justify-center w-full">
+                <button id="btn-final-ya" onclick="celebrate()" class="btn-bounce w-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-4 rounded-xl shadow-xl text-lg">
+                    IYA BENERAN! 🥰
+                </button>
+            </div>
+             <button id="btn-final-tidak" onclick="forceYesFinal(this)" class="mt-4 text-gray-400 text-sm hover:text-red-400 underline">
+                Gak jadi deh
+            </button>
+            <p id="msg-error-5" class="text-red-500 font-bold mt-2 hidden text-sm">Gak ada pilihan engga! Harus mau! 😡</p>
+        </div>
+
+        <!-- SLIDE 6: Success -->
+        <div id="slide-6" class="slide flex-col w-full">
+            <div class="mb-6 text-6xl pop-in">🎉💑🎉</div>
+            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 mb-4 pop-in" style="animation-delay: 0.2s">
+                Yeayyy!
+            </h2>
+            <p id="text-final" class="text-lg text-gray-800 font-semibold mb-6 pop-in" style="animation-delay: 0.4s">
+                <!-- JS Text -->
+            </p>
+            <div class="p-4 bg-pink-100 rounded-xl border border-pink-200 pop-in mb-6" style="animation-delay: 0.6s">
+                <p class="text-pink-800 text-sm">Status: <span class="font-bold">Pacaran 💕</span></p>
+                <p class="text-pink-800 text-xs mt-1">Mulai dari sekarang</p>
+            </div>
+            
+            <!-- Made by ZKAEl -->
+            <div class="mt-4 pop-in" style="animation-delay: 0.8s">
+                <p class="text-xs text-gray-500 animate-pulse-slow tracking-widest uppercase">
+                    Made by <span class="font-bold text-pink-600">ZKAEl</span> 💻
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data Storage
+        let data = {
+            penerima: '',
+            pengirim: ''
+        };
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingHearts();
+        });
+
+        // Navigation Logic
+        function goToSlide(slideNumber) {
+            // Validasi Slide 1
+            if (slideNumber === 2) {
+                const penerima = document.getElementById('input-penerima').value.trim();
+                const pengirim = document.getElementById('input-pengirim').value.trim();
+                
+                if (!penerima || !pengirim) {
+                    alert("Isi nama dulu yaa sayangkuu 😘");
+                    return;
+                }
+                data.penerima = penerima;
+                data.pengirim = pengirim;
+                
+                // Update dynamic texts
+                document.getElementById('text-slide-2').innerHTML = `Hai ${data.penerima}, kamu tau gak ada yang suka sama kamu?`;
+                document.getElementById('text-slide-3').innerHTML = `Kamu tau gak kalo <b>${data.pengirim}</b> suka banget sama kamu?`;
+                document.getElementById('text-slide-4').innerHTML = `Aku (${data.pengirim}) udah lama suka sama kamu, ${data.penerima}!`;
+            }
+
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show target slide
+            const target = document.getElementById(`slide-${slideNumber}`);
+            target.classList.add('active');
+        }
+
+        // "Force Yes" Logic
+        function forceYes(btn) {
+            const msg = document.getElementById('msg-error-4');
+            
+            // Animasi tombol bergerak (Tidak bisa dipencet)
+            const randomX = Math.random() * 100 - 50;
+            const randomY = Math.random() * 50 - 25;
+            const randomRot = Math.random() * 20 - 10;
+            
+            btn.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg)`;
+            
+            // Tampilkan pesan error
+            msg.classList.remove('hidden');
+            msg.classList.add('shake-anim');
+            
+            // Hapus animasi shake setelah selesai biar bisa shake lagi
+            setTimeout(() => {
+                msg.classList.remove('shake-anim');
+            }, 400);
+
+            // Perbesar tombol "Mau"
+            const btnYa = document.getElementById('btn-ya-slide-4');
+            let currentScale = btnYa.getAttribute('data-scale') || 1;
+            currentScale = parseFloat(currentScale) + 0.2;
+            btnYa.setAttribute('data-scale', currentScale);
+            btnYa.style.transform = `scale(${currentScale})`;
+        }
+
+        function forceYesFinal(btn) {
+            const msg = document.getElementById('msg-error-5');
+            msg.classList.remove('hidden');
+            msg.classList.add('shake-anim');
+            
+            btn.innerText = "Gak bisa pencet ini, pencet yang Iya!";
+            btn.classList.add('text-red-500', 'font-bold');
+            
+            setTimeout(() => {
+                msg.classList.remove('shake-anim');
+            }, 400);
+        }
+
+        // Final Celebration
+        function celebrate() {
+            goToSlide(6);
+            document.getElementById('text-final').innerText = `Selamat ya ${data.penerima}, kamu sekarang jadi pacarnya ${data.pengirim}!`;
+            
+            // Intensify hearts
+            for(let i=0; i<20; i++) {
+                setTimeout(createFloatingHearts, i * 200);
+            }
+        }
+
+        // Background Animation Logic
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Random properties
+            const size = Math.random() * 20 + 10;
+            const left = Math.random() * 100;
+            const duration = Math.random() * 5 + 5;
+            const delay = Math.random() * 2;
+            
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = `${left}%`;
+            heart.style.animationDuration = `${duration}s`;
+            heart.style.animationDelay = `${delay}s`;
+            
+            // Random heart content (emoji or css shape)
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+            heart.style.fontSize = `${size}px`;
+            
+            container.appendChild(heart);
+            
+            // Remove after animation
+            setTimeout(() => {
+                heart.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        // Create initial hearts
+        setInterval(createFloatingHearts, 800);
+    </script>
+</body>
+</html>
